@@ -230,7 +230,7 @@ export const religions: Religion[] = [
   {
     id: "protestant",
     name: "Protestant",
-    parentId: "christianity",
+    parentId: "catholic",
     foundedYear: 1517,
     founder: "Martin Luther",
     adherents: 400,

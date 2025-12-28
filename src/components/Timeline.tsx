@@ -6,6 +6,7 @@ import { religions, buildReligionTree } from "../data/religions";
 interface TimelineProps {
   onSelectReligion: (religion: Religion) => void;
   selectedReligion: Religion | null;
+  hiddenBranches: Set<string>;
 }
 
 interface VisibleNode {
@@ -14,16 +15,30 @@ interface VisibleNode {
   isExpanded: boolean;
 }
 
-export function Timeline({ onSelectReligion, selectedReligion }: TimelineProps) {
+export function Timeline({ onSelectReligion, selectedReligion, hiddenBranches }: TimelineProps) {
   const svgRef = useRef<SVGSVGElement>(null);
-  const childrenMap = buildReligionTree(religions);
+
+  // Filter religions based on hidden branches
+  const filteredReligions = religions.filter((r) => {
+    let current: Religion | undefined = r;
+    while (current) {
+      if (hiddenBranches.has(current.id)) {
+        return false;
+      }
+      current = religions.find((p) => p.id === current?.parentId);
+    }
+    return true;
+  });
+
+  const childrenMap = buildReligionTree(filteredReligions);
 
   // Track which nodes are expanded - start with root nodes expanded
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(() => {
     const initial = new Set<string>();
-    // Expand Judaism and Christianity by default to show the tree
+    // Expand Judaism, Christianity, Catholic, and Protestant by default
     initial.add("judaism");
     initial.add("christianity");
+    initial.add("catholic");
     initial.add("protestant");
     return initial;
   });
@@ -309,7 +324,7 @@ export function Timeline({ onSelectReligion, selectedReligion }: TimelineProps) 
         }
       });
 
-  }, [expandedNodes, getVisibleNodes, onSelectReligion, selectedReligion, toggleExpand]);
+  }, [expandedNodes, getVisibleNodes, onSelectReligion, selectedReligion, toggleExpand, hiddenBranches, filteredReligions]);
 
   return (
     <svg
