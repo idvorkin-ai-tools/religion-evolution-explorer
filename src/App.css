@@ -203,6 +203,7 @@ body {
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .detail-concept-header .concept-name {
@@ -221,6 +222,57 @@ body {
   margin-top: 0.5rem;
   padding-top: 0.5rem;
   border-top: 1px solid #334155;
+}
+
+/* Comparison styles */
+.comparison-note {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #64748b;
+}
+
+.concept-changed {
+  background: linear-gradient(135deg, #1e293b 0%, #172554 100%);
+  border: 1px solid #3b82f6;
+  position: relative;
+}
+
+.concept-changed::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #3b82f6;
+  border-radius: 8px 0 0 8px;
+}
+
+.change-badge {
+  background: #3b82f6;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  margin-left: auto;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.parent-comparison {
+  background: #0f172a;
+  border-left: 3px solid #475569;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.parent-label {
+  font-weight: 600;
+  font-size: 0.8rem;
 }
 
 /* Concept Grid */
@@ -250,7 +302,7 @@ body {
 
 .grid-header {
   display: grid;
-  grid-template-columns: 200px repeat(7, minmax(150px, 1fr));
+  /* grid-template-columns set dynamically via inline style */
   gap: 1px;
   background: #334155;
   border-radius: 8px 8px 0 0;
@@ -295,7 +347,7 @@ body {
 
 .concept-row {
   display: grid;
-  grid-template-columns: 200px repeat(7, minmax(150px, 1fr));
+  /* grid-template-columns set dynamically via inline style */
   gap: 1px;
   background: #334155;
 }
@@ -371,13 +423,6 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 1200px) {
-  .grid-header,
-  .concept-row {
-    grid-template-columns: 180px repeat(7, minmax(140px, 1fr));
-  }
-}
-
 @media (max-width: 768px) {
   .app-header h1 {
     font-size: 1.5rem;
@@ -389,11 +434,6 @@ body {
 
   .concept-grid-container {
     padding: 1rem;
-  }
-
-  .grid-header,
-  .concept-row {
-    grid-template-columns: 150px repeat(7, minmax(120px, 1fr));
   }
 
   .concept-cell,

@@ -12,16 +12,19 @@ export function ConceptGrid({
   selectedReligion,
   onSelectReligion,
 }: ConceptGridProps) {
+  // Dynamic grid columns based on number of religions
+  const gridColumns = `200px repeat(${religions.length}, minmax(140px, 1fr))`;
+
   return (
     <div className="concept-grid-container">
       <h2 className="concept-grid-title">Concept Comparison</h2>
       <p className="concept-grid-subtitle">
-        How key theological concepts differ across traditions
+        How key theological concepts differ across traditions ({religions.length} shown)
       </p>
 
       <div className="concept-grid">
         {/* Header row with religion names */}
-        <div className="grid-header">
+        <div className="grid-header" style={{ gridTemplateColumns: gridColumns }}>
           <div className="concept-label-header">Concept</div>
           {religions.map((religion) => (
             <div
@@ -43,7 +46,7 @@ export function ConceptGrid({
 
         {/* Concept rows */}
         {concepts.map((concept) => (
-          <div key={concept.id} className="concept-row">
+          <div key={concept.id} className="concept-row" style={{ gridTemplateColumns: gridColumns }}>
             <div className="concept-label">
               <span className="concept-icon">{concept.icon}</span>
               <div>

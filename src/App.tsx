@@ -31,12 +31,16 @@ function App() {
   };
 
   // Filter religions based on hidden branches
+  // Root branches are independently toggleable - hiding one doesn't hide others
   const visibleReligions = religions.filter((r) => {
-    // Check if this religion or any of its ancestors is hidden
     let current: Religion | undefined = r;
     while (current) {
       if (hiddenBranches.has(current.id)) {
         return false;
+      }
+      // Stop at root branches - they're independent trees
+      if (ROOT_BRANCHES.includes(current.id as typeof ROOT_BRANCHES[number])) {
+        break;
       }
       current = religions.find((p) => p.id === current?.parentId);
     }
