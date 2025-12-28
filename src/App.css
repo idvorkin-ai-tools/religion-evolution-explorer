@@ -1,0 +1,346 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  line-height: 1.6;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border-bottom: 1px solid #334155;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app-header p {
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+/* Main Content */
+.app-main {
+  flex: 1;
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.timeline-section {
+  margin-bottom: 2rem;
+}
+
+/* Detail Section */
+.detail-section {
+  margin-bottom: 2rem;
+}
+
+.religion-detail {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #334155;
+  border: none;
+  color: #94a3b8;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.close-button:hover {
+  background: #475569;
+  color: #fff;
+}
+
+.detail-header {
+  border-left: 4px solid;
+  padding-left: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-header h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.detail-meta {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.lineage {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.lineage-label {
+  color: #64748b;
+  margin-right: 0.5rem;
+}
+
+.lineage-item {
+  font-weight: 500;
+}
+
+.lineage-item.current {
+  font-weight: 700;
+}
+
+.detail-concepts {
+  display: grid;
+  gap: 1rem;
+}
+
+.detail-concepts h3 {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+.detail-concept {
+  background: #0f172a;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.detail-concept-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.detail-concept-header .concept-name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.detail-concept-summary {
+  color: #f1f5f9;
+  font-size: 0.95rem;
+}
+
+.detail-concept-details {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #334155;
+}
+
+/* Concept Grid */
+.concept-grid-container {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.concept-grid-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.concept-grid-subtitle {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.concept-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.grid-header {
+  display: grid;
+  grid-template-columns: 200px repeat(7, minmax(150px, 1fr));
+  gap: 1px;
+  background: #334155;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+}
+
+.concept-label-header {
+  background: #0f172a;
+  padding: 0.75rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.religion-header {
+  background: #0f172a;
+  padding: 0.75rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.religion-header:hover {
+  background: #1e293b;
+}
+
+.religion-header.selected {
+  background: #1e293b;
+}
+
+.religion-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.concept-row {
+  display: grid;
+  grid-template-columns: 200px repeat(7, minmax(150px, 1fr));
+  gap: 1px;
+  background: #334155;
+}
+
+.concept-row:last-child {
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+
+.concept-label {
+  background: #0f172a;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.concept-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.concept-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.concept-description {
+  color: #64748b;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.concept-cell {
+  background: #0f172a;
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.concept-cell:hover {
+  background: #1e293b;
+}
+
+.concept-cell.selected {
+  background: #1e293b;
+}
+
+/* Footer */
+.app-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #1e293b;
+  border-top: 1px solid #334155;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.app-footer a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+}
+
+.app-footer p {
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .grid-header,
+  .concept-row {
+    grid-template-columns: 180px repeat(7, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .app-main {
+    padding: 1rem;
+  }
+
+  .concept-grid-container {
+    padding: 1rem;
+  }
+
+  .grid-header,
+  .concept-row {
+    grid-template-columns: 150px repeat(7, minmax(120px, 1fr));
+  }
+
+  .concept-cell,
+  .concept-label {
+    padding: 0.75rem;
+    font-size: 0.8rem;
+  }
+}
