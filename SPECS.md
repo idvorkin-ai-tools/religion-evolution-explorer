@@ -16,13 +16,18 @@ https://idvorkin-religion-evolution.surge.sh
 - [x] Timeline visualization
 - [x] Concept comparison grid (hell, forgiveness, salvation, afterlife)
 
+### v0.2 - Interactive Timeline
+- [x] Double-click to expand/collapse branches
+- [x] Visual +/- indicators for expandable nodes
+- [x] Smooth animations on expand/collapse
+- [x] Dynamic height adjustment based on visible nodes
+- [x] Relative size indicators (adherent population)
+
 ## Planned Features
 
-### v0.2 - Enhanced Visualization
-- [ ] Interactive zoom on timeline
-- [ ] Click to expand/collapse branches
-- [ ] Relative size indicators (adherent population)
-- [ ] Smooth animations on state changes
+### v0.3 - Enhanced Visualization
+- [ ] Interactive zoom/pan on timeline
+- [ ] Hover tooltips with quick info
 
 ### v0.3 - Concept Deep Dive
 - [ ] Add more concepts (prayer, scripture, clergy, rituals)
