@@ -39,7 +39,7 @@ jobs:
           node-version: 20
 
       - name: Deploy to Surge
-        run: npx surge ./dist "${{ secrets.SURGE_DOMAIN }}" --token "${{ secrets.SURGE_TOKEN }}"
+        run: npx surge ./dist "${{ vars.SURGE_DOMAIN }}" --token "${{ secrets.SURGE_TOKEN }}"
 
   deploy-pr:
     if: |
@@ -67,7 +67,7 @@ jobs:
             const pr = prs.find(p => p.head.sha === headSha);
             if (pr) {
               core.setOutput('number', pr.number);
-              core.setOutput('domain', `pr-${pr.number}-${{ secrets.SURGE_DOMAIN }}`);
+              core.setOutput('domain', `pr-${pr.number}-${{ vars.SURGE_DOMAIN }}`);
             } else {
               core.setFailed(`Could not find PR for SHA ${headSha}`);
             }
@@ -141,4 +141,4 @@ jobs:
           node-version: 20
 
       - name: Teardown Surge deployment
-        run: npx surge teardown "pr-${{ github.event.pull_request.number }}-${{ secrets.SURGE_DOMAIN }}" --token "${{ secrets.SURGE_TOKEN }}"
+        run: npx surge teardown "pr-${{ github.event.pull_request.number }}-${{ vars.SURGE_DOMAIN }}" --token "${{ secrets.SURGE_TOKEN }}"
