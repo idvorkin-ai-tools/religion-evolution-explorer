@@ -125,7 +125,6 @@ export function Timeline({ onSelectReligion, selectedReligion, hiddenBranches }:
     const visibleNodes = getVisibleNodes();
     const ySpacing = 80;
     const contentHeight = Math.max(height, margin.top + 60 + visibleNodes.length * ySpacing + margin.bottom);
-    const contentWidth = Math.max(width, 1200);
 
     // Set up SVG with fixed viewport
     svg.attr("height", height).attr("width", "100%");
@@ -147,10 +146,22 @@ export function Timeline({ onSelectReligion, selectedReligion, hiddenBranches }:
     // Create the main content group that will be transformed
     const mainGroup = zoomContainer.append("g").attr("class", "main-group");
 
-    // Time scale - from 2000 BCE to 2000 CE
+    // Calculate time range from visible nodes
+    const years = visibleNodes.map(n => n.religion.foundedYear);
+    const minYear = Math.min(...years);
+    const maxYear = Math.max(...years);
+    const yearRange = maxYear - minYear;
+    const padding = Math.max(yearRange * 0.15, 50); // At least 50 years padding
+    const domainMin = minYear - padding;
+    const domainMax = maxYear + padding;
+
+    // Calculate content width based on year range (more years = wider)
+    const contentWidth = Math.max(width, Math.min(2000, 600 + yearRange * 0.5));
+
+    // Time scale - dynamic based on visible religions
     const timeScale = d3
       .scaleLinear()
-      .domain([-2000, 2000])
+      .domain([domainMin, domainMax])
       .range([margin.left, contentWidth - margin.right]);
 
     // Calculate positions
@@ -167,8 +178,25 @@ export function Timeline({ onSelectReligion, selectedReligion, hiddenBranches }:
     // Size scale for nodes
     const sizeScale = d3.scaleSqrt().domain([0, 2000]).range([10, 40]);
 
-    // Draw background grid
-    const gridLines = [-2000, -1500, -1000, -500, 0, 500, 1000, 1500, 2000];
+    // Generate dynamic grid lines based on visible range
+    const generateGridLines = (min: number, max: number): number[] => {
+      const range = max - min;
+      let step: number;
+      if (range <= 200) step = 25;
+      else if (range <= 500) step = 50;
+      else if (range <= 1000) step = 100;
+      else if (range <= 2000) step = 250;
+      else step = 500;
+
+      const lines: number[] = [];
+      const start = Math.ceil(min / step) * step;
+      for (let y = start; y <= max; y += step) {
+        lines.push(y);
+      }
+      return lines;
+    };
+
+    const gridLines = generateGridLines(domainMin, domainMax);
     mainGroup
       .selectAll(".grid-line")
       .data(gridLines)
@@ -318,8 +346,13 @@ export function Timeline({ onSelectReligion, selectedReligion, hiddenBranches }:
     svg.call(zoom);
     zoomRef.current = zoom;
 
-    // Set initial transform to show the content nicely
-    const initialTransform = d3.zoomIdentity.translate(0, 0).scale(0.8);
+    // Calculate initial transform to fit all content
+    const scaleX = (width - 40) / contentWidth;
+    const scaleY = (height - 40) / contentHeight;
+    const initialScale = Math.min(scaleX, scaleY, 1); // Don't zoom in more than 1x
+    const initialTransform = d3.zoomIdentity
+      .translate((width - contentWidth * initialScale) / 2, 20)
+      .scale(initialScale);
     svg.call(zoom.transform, initialTransform);
 
     // Add UI overlay (outside zoom)
